@@ -1,0 +1,31 @@
+.Home {
+  /* Use the full image path if the image is inside the public folder */
+  background-image: url("../background.jpg");
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh; /* This will ensure that the background covers the full viewport height */
+}
+
+.Home-main {
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(140px, 1fr)
+  ); /* Adjust minmax values based on your design */
+  gap: 20px; /* Adjust gap based on your design */
+  padding: 20px; /* Adjust padding based on your design */
+  justify-content: center;
+}
+
+.Home-header {
+  background-color: #ffa500; /* Use the correct color */
+  padding: 20px;
+  border-radius: 20px; /* Adjust based on your design */
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px; /* Space between header and content */
+}
+
+/* Add additional styles for the back arrow, title, and illustration */

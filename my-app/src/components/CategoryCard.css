@@ -1,0 +1,33 @@
+.category-card {
+  border-radius: 20px; /* Adjust based on your design */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adjust based on your design */
+  overflow: hidden;
+  background-color: #ffffff; /* This should match each category's color */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.category-card img {
+  width: 100%; /* make the image fill the container */
+  height: auto; /* maintain the aspect ratio */
+  max-width: 70px; /* adjust this to set your preferred maximum width */
+  max-height: 70px; /* adjust this to set your preferred maximum height */
+  /* object-fit: contain; this will make sure the image is scaled properly */
+}
+
+.category-info {
+  padding: 10px;
+  text-align: center;
+}
+
+.category-info h3 {
+  font-size: 1.5em; /* Adjust based on your design */
+  color: #333; /* Adjust based on your design */
+}
+
+.category-info p {
+  font-size: 1.2em; /* Adjust based on your design */
+  color: #666; /* Adjust based on your design */
+}
