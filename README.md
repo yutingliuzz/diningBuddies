@@ -1,3 +1,5 @@
 # diningBuddies
 
-here is app intro
+cd my-app
+npm i
+npm run dev
