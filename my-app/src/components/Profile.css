@@ -1,0 +1,52 @@
+.profile-page {
+  height: 100vh;
+  background-image: url("../background.jpg");
+  background-size: cover;
+  background-position: center;
+}
+
+.header {
+  text-align: center;
+  padding: 20px;
+}
+
+.avatar-container {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.avatar {
+  width: 80px;
+  height: 80px;
+  background: white;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 10px;
+  /* Adjust the background image to a URL of your choice or keep it blank */
+
+  background-size: cover;
+  background-position: center;
+}
+
+.menu {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.menu-item,
+.sign-out {
+  background: transparent;
+  border: 1px solid #fff;
+  color: #fff;
+  padding: 10px 20px;
+  margin: 10px auto;
+  width: 80%;
+  text-align: center;
+  border-radius: 5px;
+}
+
+.sign-out {
+  background: #444; /* Sign out button has a different background */
+}

@@ -1,0 +1,34 @@
+/* FriendList.css */
+.friend-list {
+  overflow-y: auto;
+  height: 100vh; /* You can adjust the height as needed */
+  background-color: #ffac4b;
+  padding: 20px;
+}
+
+.friend-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 10px;
+  border-radius: 5px;
+  border-bottom: 1px solid black;
+}
+
+.friend-avatar {
+  width: 30px; /* Adjust this value to scale the width of the avatar */
+  height: 30px; /* Adjust this value to scale the height of the avatar */
+  border-radius: 50%; /* This will make it a circle shape */
+  margin-right: 15px;
+  object-fit: cover;
+}
+
+.friend-info h2 {
+  margin: 0;
+  color: black;
+}
+
+.friend-info p {
+  margin: 5px 0 0;
+  color: #aaa;
+}

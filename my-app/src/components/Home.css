@@ -18,14 +18,13 @@
 }
 
 .Home-header {
-  background-color: #ffa500; /* Use the correct color */
-  padding: 20px;
-  border-radius: 20px; /* Adjust based on your design */
-  position: relative;
+  text-align: left;
+  padding-right: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 20px; /* Space between header and content */
+  margin-bottom: 1px; /* Space between header and content */
+  padding-top: 10px;
 }
 
 /* Add additional styles for the back arrow, title, and illustration */
