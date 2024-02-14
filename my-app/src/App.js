@@ -5,6 +5,12 @@ import Navigation from "./components/Navigation";
 import Home from "./components/Home";
 import Friends from "./components/Friends";
 import Profile from "./components/Profile";
+import { initializeApp } from "firebase/app";
+import firebaseConfig from './firebaseConfig';
+import 'firebase/auth'; 
+
+const app = initializeApp(firebaseConfig);
+
 function App() {
   return (
     <BrowserRouter>
