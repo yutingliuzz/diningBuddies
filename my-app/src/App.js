@@ -5,13 +5,22 @@ import Navigation from "./components/Navigation";
 import Home from "./components/Home";
 import Friends from "./components/Friends";
 import Profile from "./components/Profile";
+import Chat from './components/Chat';
 import { initializeApp } from "firebase/app";
 import firebaseConfig from './firebaseConfig';
-import 'firebase/auth'; 
+import {getAuth} from 'firebase/auth'; 
+// import firebase from 'firebase/app';
+import { getFirestore } from "firebase/firestore";
+import { useAuthState } from 'react-firebase-hooks/auth';
 
 const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const firestore = getFirestore(app);
 
 function App() {
+  //User log in information
+  const [user] = useAuthState(auth);
+
   return (
     <BrowserRouter>
       <Navigation />
@@ -20,6 +29,7 @@ function App() {
         <Route path="/home" element={<Home />} />
         <Route path="/friends" element={<Friends />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/chat" element={<Chat user={user} firestore={firestore}/>} />
       </Routes>
     </BrowserRouter>
   );
