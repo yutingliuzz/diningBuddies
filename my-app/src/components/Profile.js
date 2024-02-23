@@ -1,20 +1,43 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { initializeApp } from 'firebase/app';
-import { getAuth, signOut, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { getAuth, signOut, GoogleAuthProvider, signInWithPopup, onAuthStateChanged } from "firebase/auth";
+import { getFirestore, doc, setDoc } from 'firebase/firestore';
 import firebaseConfig from '../firebaseConfig';
 import "./Profile.css";
 
+// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+const db = getFirestore(app); // Initialize Firestore
 
 const Profile = () => {
   const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    // Listen for authentication state changes
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setUser(user);
+        // Optionally, create or update the user document in Firestore
+        const userRef = doc(db, "Users", user.uid);
+        setDoc(userRef, {
+          email: user.email,
+          displayName: user.displayName,
+          photoURL: user.photoURL,
+        }, { merge: true });
+      } else {
+        setUser(null);
+      }
+    });
+
+    return () => unsubscribe(); // Clean up subscription
+  }, []);
 
   const signInWithGoogle = () => {
     const provider = new GoogleAuthProvider();
     signInWithPopup(auth, provider)
       .then((result) => {
-        setUser(result.user);
+        // setUser(result.user); // This line is now handled by onAuthStateChanged
       })
       .catch((error) => {
         console.error(error.message);
@@ -22,10 +45,9 @@ const Profile = () => {
   };
 
   const handleSignOut = () => {
-    // Second confirmation step
     if (window.confirm("Are you sure you want to sign out?")) {
       signOut(auth).then(() => {
-        setUser(null);
+        // setUser(null); // This line is now handled by onAuthStateChanged
       }).catch((error) => {
         console.error(error.message);
       });
@@ -49,7 +71,6 @@ const Profile = () => {
           </div>
         </>
       ) : (
-        // Wrapped the sign-in button in a container for centering
         <div className="sign-in-container">
           <button onClick={signInWithGoogle} className="google-sign-in">
             Sign In with Google
