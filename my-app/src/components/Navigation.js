@@ -45,6 +45,10 @@ export default function Navigation() {
           backgroundColor: "white",
           borderTopLeftRadius: "12px",
           borderTopRightRadius: "12px",
+          "& .MuiBottomNavigationAction-label": {
+            // This targets the label of the BottomNavigationAction
+            fontFamily: "Montserrat, sans-serif",
+          },
         }}
       >
         <BottomNavigationAction
@@ -53,9 +57,6 @@ export default function Navigation() {
           sx={{
             "&:hover": {
               color: "#FFAC4B", // Change to your desired hover color
-            },
-            ".MuiBottomNavigationAction-label": {
-              fontFamily: '"Merriweather Sans", sans-serif',
             },
           }}
         />
@@ -66,9 +67,6 @@ export default function Navigation() {
             "&:hover": {
               color: "#FFAC4B", // Change to your desired hover color
             },
-            ".MuiBottomNavigationAction-label": {
-              fontFamily: '"Merriweather Sans", sans-serif',
-            },
           }}
         />
         <BottomNavigationAction
@@ -77,9 +75,6 @@ export default function Navigation() {
           sx={{
             "&:hover": {
               color: "#FFAC4B", // Change to your desired hover color
-            },
-            ".MuiBottomNavigationAction-label": {
-              fontFamily: '"Merriweather Sans", sans-serif',
             },
           }}
         />

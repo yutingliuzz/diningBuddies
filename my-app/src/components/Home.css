@@ -1,13 +1,8 @@
 .Home {
-  /* Use the full image path if the image is inside the public folder */
-  /* background-image: url("../background.jpg");
-  background-size: cover;
-  background-position: center;
-  min-height: 100vh; This will ensure that the background covers the full viewport height */
-
   background-color: white; /* Set the background color of the entire page or container to white */
   position: relative; /* This allows us to position the circle relative to this container */
-  overflow: hidden; /* Ensures the circle doesn't overflow outside this container */
+  min-height: 100vh;
+  padding-bottom: 100px;
 }
 
 .Home-main {

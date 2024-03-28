@@ -9,6 +9,8 @@
 }
 
 .category-card img {
+  border-radius: 0%;
+  padding-top: 10px;
   width: 100%; /* make the image fill the container */
   height: auto; /* maintain the aspect ratio */
   max-width: 70px; /* adjust this to set your preferred maximum width */
