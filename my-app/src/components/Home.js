@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { getFirestore, collection, getDocs } from "firebase/firestore";
 import "./Home.css";
 import CategoryCard from "./CategoryCard"; // Ensure this path is correct
-import backgroundImage from "../background.jpg";
 
 function Home() {
   // State to store dining halls data from Firestore
@@ -26,16 +25,9 @@ function Home() {
   }, [db]); // Empty array ensures this only runs once when the component mounts
 
   return (
-    <div
-      className="Home"
-      style={{
-        backgroundImage: `url(${backgroundImage})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-      }}
-    >
+    <div className="Home">
       <div className="Home-header">
-        <h1>Dining Hall</h1>
+        <h1>Dining Halls</h1>
       </div>
       <main className="Home-main">
         {/* Render a CategoryCard for each dining hall fetched from Firestore */}

@@ -1,8 +1,31 @@
 .profile-page {
+  background-color: white;
   height: 100vh;
-  background-image: url("../background.jpg");
-  background-size: cover;
-  background-position: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.profile-page::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50vw; /* Keep your circle size */
+  height: 50vw; /* Keep your circle size */
+  background-color: #f9d342; /* Your circle color */
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  z-index: -1; /* Ensure the circle is behind the content */
+}
+
+.content-container {
+  position: absolute; /* Absolutely position within the profile-page */
+  top: 0;
+  left: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow-y: auto; /* Enables scrolling within this container */
+  z-index: 1; /* Ensures content is above the background circle */
 }
 
 .header {
@@ -18,7 +41,7 @@
 .avatar {
   width: 80px;
   height: 80px;
-  background: white;
+  background: #191d21;
   border-radius: 50%;
   display: inline-block;
   margin-right: 10px;
@@ -38,8 +61,8 @@
 .menu-item,
 .sign-out {
   background: transparent;
-  border: 1px solid #fff;
-  color: #fff;
+  border: 1px solid #191d21;
+  color: #191d21;
   padding: 10px 20px;
   margin: 10px auto;
   width: 80%;
@@ -48,7 +71,8 @@
 }
 
 .sign-out {
-  background: #444; /* Sign out button has a different background */
+  background: white;
+  color: #191d21; /* Sign out button has a different background */
 }
 
 /* Center the sign-in button container */
@@ -61,7 +85,7 @@
 
 /* Styling for the Google Sign-In button */
 .google-sign-in {
-  background-color: #4285F4; /* Google blue */
+  background-color: #4285f4; /* Google blue */
   color: white;
   padding: 10px 15px;
   border: none;

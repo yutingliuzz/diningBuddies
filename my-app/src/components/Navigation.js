@@ -42,7 +42,7 @@ export default function Navigation() {
         onChange={handleChange}
         sx={{
           height: "80px",
-          backgroundColor: "#393939",
+          backgroundColor: "white",
           borderTopLeftRadius: "12px",
           borderTopRightRadius: "12px",
         }}
