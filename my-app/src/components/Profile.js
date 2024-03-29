@@ -3,8 +3,9 @@ import "./Profile.css";
 import { AuthContext } from "../context/AuthContext";
 
 const Profile = () => {
-  const { currentUser, signInWithGoogle, handleSignOut} = useContext(AuthContext)
-  const [user, setUser] = useState(currentUser)
+  const { currentUser, signInWithGoogle, handleSignOut } =
+    useContext(AuthContext);
+  const [user, setUser] = useState(currentUser);
   return (
     <div className="profile-page">
       <div className="content-container">

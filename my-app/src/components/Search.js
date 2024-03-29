@@ -15,15 +15,14 @@ import {
 import { db } from "../firebaseConfig";
 import { AuthContext } from "../context/AuthContext";
 
-
 const Search = () => {
-     const [username, setUsername] = useState("");
-     const [user, setUser] = useState(null);
-     const [err, setErr] = useState(false);
+  const [username, setUsername] = useState("");
+  const [user, setUser] = useState(null);
+  const [err, setErr] = useState(false);
 
-     const { currentUser } = useContext(AuthContext);
+  const { currentUser } = useContext(AuthContext);
 
-    const handleSearch = async () => {
+  const handleSearch = async () => {
     const q = query(
       collection(db, "users"),
       where("displayName", "==", username)
@@ -38,13 +37,12 @@ const Search = () => {
       setErr(true);
     }
   };
-  
-    const handleKey = (e) => {
+
+  const handleKey = (e) => {
     e.code === "Enter" && handleSearch();
   };
 
-
-    return(
+  return (
     <div className="search">
       <div className="searchForm">
         <input

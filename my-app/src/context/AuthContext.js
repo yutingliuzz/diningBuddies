@@ -1,26 +1,17 @@
 import React from "react";
 import { createContext, useEffect, useState } from "react";
-// import { auth } from "../firebaseConfig";
-// import { initializeApp } from "firebase/app";
 import {
-  getAuth,
   signOut,
   GoogleAuthProvider,
   signInWithPopup,
   onAuthStateChanged,
 } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
-import { auth, db} from "../firebaseConfig";
-// // Initialize Firebase
-// const app = initializeApp(firebaseConfig);
-// const auth = getAuth(app);
-// const db = getFirestore(app); // Initialize Firestore
-
+import { auth, db } from "../firebaseConfig";
 export const AuthContext = createContext();
 
 export const AuthContextProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
-  console.log(currentUser)
   const signInWithGoogle = () => {
     const provider = new GoogleAuthProvider();
     signInWithPopup(auth, provider)
@@ -43,7 +34,6 @@ export const AuthContextProvider = ({ children }) => {
         });
     }
   };
-
 
   useEffect(() => {
     // Listen for authentication state changes
@@ -69,22 +59,7 @@ export const AuthContextProvider = ({ children }) => {
     return () => unsubscribe(); // Clean up subscription
   }, []);
 
-  // useEffect(() => {
-  //   const unsub = onAuthStateChanged(auth, (user) => {
-  //     setCurrentUser(user);
-  //     console.log(user);
-  //   });
+  const value = { currentUser, signInWithGoogle, handleSignOut };
 
-  //   return () => {
-  //     unsub();
-  //   };
-  // }, []);
-
-  const value = {currentUser, signInWithGoogle, handleSignOut}
-
-  return (
-    <AuthContext.Provider value={value}>
-      {children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
