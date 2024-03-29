@@ -5,13 +5,14 @@ import Navigation from "./components/Navigation";
 import Home from "./components/Home";
 import Friends from "./components/Friends";
 import Profile from "./components/Profile";
-import Chat from './components/Chat';
+import Chat from "./components/Chat";
 import { initializeApp } from "firebase/app";
-import firebaseConfig from './firebaseConfig';
-import {getAuth} from 'firebase/auth'; 
+import firebaseConfig from "./firebaseConfig";
+import { getAuth } from "firebase/auth";
 // import firebase from 'firebase/app';
 import { getFirestore } from "firebase/firestore";
-import { useAuthState } from 'react-firebase-hooks/auth';
+import { useAuthState } from "react-firebase-hooks/auth";
+import DiningHallDetail from "./components/DiningHallDetail";
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
@@ -29,7 +30,11 @@ function App() {
         <Route path="/home" element={<Home />} />
         <Route path="/friends" element={<Friends />} />
         <Route path="/profile" element={<Profile />} />
-        <Route path="/chat" element={<Chat user={user} firestore={firestore}/>} />
+        <Route
+          path="/chat"
+          element={<Chat user={user} firestore={firestore} />}
+        />
+        <Route path="/dining-halls/:name" element={<DiningHallDetail />} />
       </Routes>
     </BrowserRouter>
   );

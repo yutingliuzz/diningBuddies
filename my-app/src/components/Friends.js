@@ -1,12 +1,6 @@
 import React from "react";
 import "./Friends.css";
 
-// function Friends() {
-//   return <h1>Friends</h1>;
-// }
-
-// export default Friends;
-
 const friends = [
   // This would be fetched from your backend; using static data for now
   { id: 1, name: "Cora Chen", email: "friend1@example.com" },
@@ -17,7 +11,7 @@ const friends = [
 
 const Friends = () => {
   return (
-    <div className="friend-list">
+    <div className="friend-list" style={{ backgroundColor: "white" }}>
       <h1>Friends</h1>
       {friends.map((friend) => (
         <div key={friend.id} className="friend-item">

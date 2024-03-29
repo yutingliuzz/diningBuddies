@@ -1,30 +1,19 @@
-import React, { useState } from "react";
+import React from "react";
 import "./CategoryCard.css"; // Make sure you have corresponding CSS
-import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import Modal from "@mui/material/Modal";
+import { useNavigate } from "react-router-dom";
 
-const CategoryCard = ({ name, imageUrl, color, description, menu }) => {
-  const [open, setOpen] = useState(false); // Add state to manage modal visibility
+const CategoryCard = ({ id, name, imageUrl, color, description, menu }) => {
+  const navigate = useNavigate();
 
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  // Call this function when the 'View More' button is clicked
+  const handleViewMore = () => {
+    navigate(`/dining-halls/${encodeURIComponent(name)}`);
+  };
 
   // Use inline styling to set the background color dynamically
   const cardStyle = {
     backgroundColor: color, // This will be the color passed as a prop
-  };
-
-  const style = {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    width: 200,
-    bgcolor: "#393939",
-    boxShadow: 24,
-    p: 4,
   };
 
   return (
@@ -37,41 +26,11 @@ const CategoryCard = ({ name, imageUrl, color, description, menu }) => {
             color: "#393939",
             fontFamily: "Montserrat, sans-serif",
           }}
-          onClick={handleOpen}
+          onClick={handleViewMore}
         >
           View More
         </Button>
       </div>
-
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-title"
-        aria-describedby="modal-description"
-      >
-        <Box sx={style}>
-          <Typography
-            id="modal-title"
-            variant="h6"
-            component="h2"
-            sx={{ fontFamily: "Montserrat, sans-serif", color: "white" }}
-          >
-            {name}
-          </Typography>
-          <Typography
-            id="modal-description"
-            sx={{ mt: 2, fontFamily: "Montserrat, sans-serif", color: "white" }}
-          >
-            {description}
-          </Typography>
-          <Typography
-            id="modal-menu"
-            sx={{ mt: 2, fontFamily: "Montserrat, sans-serif", color: "white" }}
-          >
-            {menu}
-          </Typography>
-        </Box>
-      </Modal>
     </div>
   );
 };

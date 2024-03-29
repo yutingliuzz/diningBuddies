@@ -1,8 +1,8 @@
 /* FriendList.css */
 .friend-list {
+  background-color: "white";
   overflow-y: auto;
   height: 100vh; /* You can adjust the height as needed */
-  background-color: #ffac4b;
   padding: 20px;
 }
 

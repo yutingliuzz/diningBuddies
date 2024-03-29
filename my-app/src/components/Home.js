@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { getFirestore, collection, getDocs } from "firebase/firestore";
+import axios from "axios";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import IconButton from "@mui/material/IconButton";
@@ -12,22 +12,20 @@ function Home() {
   const [diningHalls, setDiningHalls] = useState([]);
   const [searchText, setSearchText] = useState(""); // State to keep track of search text
 
-  // Firestore database instance
-  const db = getFirestore();
-
-  // Fetch dining hall data from Firestore when the component mounts
   useEffect(() => {
     const fetchDiningHalls = async () => {
-      const querySnapshot = await getDocs(collection(db, "DiningHalls"));
-      const halls = querySnapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-      setDiningHalls(halls);
+      try {
+        // Replace 'http://localhost:3001/DiningHalls' with your actual backend server's URL
+        const response = await axios.get("http://localhost:3001/DiningHalls");
+        setDiningHalls(response.data);
+        console.log(response.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
     };
 
-    fetchDiningHalls().catch(console.error);
-  }, [db]);
+    fetchDiningHalls();
+  }, []);
 
   // Filter dining halls based on search text
   const filteredDiningHalls = diningHalls.filter((hall) =>

@@ -1,0 +1,40 @@
+/* DiningHallDetail.css */
+
+.detail-container {
+  padding: 20px;
+  background-color: #fff; /* Assuming a white background */
+  height: 100vh; /* Full height of the viewport */
+  display: flex;
+  flex-direction: column;
+}
+
+.detail-header {
+  /* Style as needed for the top bar of the page */
+}
+
+.detail-title {
+  margin: 0;
+  padding: 20px;
+  background-color: #000; /* Assuming a black background for the title bar */
+  color: #fff; /* White text */
+  text-align: center;
+}
+
+.detail-content {
+  flex: 1; /* Fill the remaining space */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.detail-content h2,
+.detail-content h3 {
+  margin: 10px 0; /* Spacing between title and content */
+  color: #333; /* Dark grey color for the titles */
+}
+
+.detail-content p {
+  margin: 5px 0; /* Spacing between the paragraphs */
+  color: #666; /* Lighter grey color for the text */
+}

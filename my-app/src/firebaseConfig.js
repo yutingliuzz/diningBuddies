@@ -13,7 +13,7 @@ const firebaseConfig = {
   storageBucket: "diningbuddies.appspot.com",
   messagingSenderId: "718666198249",
   appId: "1:718666198249:web:cb7484500580892f315478",
-  measurementId: "G-WH35YC5VLJ"
+  measurementId: "G-WH35YC5VLJ",
 };
 
 // Initialize Firebase

@@ -49,6 +49,9 @@ export default function Navigation() {
             // This targets the label of the BottomNavigationAction
             fontFamily: "Montserrat, sans-serif",
           },
+          "& .MuiBottomNavigationAction-root.Mui-selected": {
+            color: "#FFAC4B",
+          },
         }}
       >
         <BottomNavigationAction
