@@ -8,10 +8,6 @@
   flex-direction: column;
 }
 
-.detail-header {
-  /* Style as needed for the top bar of the page */
-}
-
 .detail-title {
   margin: 0;
   padding: 20px;
@@ -37,4 +33,15 @@
 .detail-content p {
   margin: 5px 0; /* Spacing between the paragraphs */
   color: #666; /* Lighter grey color for the text */
+}
+
+.detail-container {
+  text-align: center; /* This centers the text inside the container */
+}
+
+.button-stack {
+  display: flex;
+  justify-content: center; /* This centers the flex items (buttons) horizontally */
+  gap: 20px; /* This adds space between your buttons */
+  padding-top: 20px; /* Space above the button group */
 }

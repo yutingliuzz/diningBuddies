@@ -1,5 +1,5 @@
 import React from "react";
-import "./CategoryCard.css"; // Make sure you have corresponding CSS
+import "./CategoryCard.css";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
 

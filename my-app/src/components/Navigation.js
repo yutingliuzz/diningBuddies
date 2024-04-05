@@ -59,7 +59,7 @@ export default function Navigation() {
           icon={<HomeIcon />}
           sx={{
             "&:hover": {
-              color: "#FFAC4B", // Change to your desired hover color
+              color: "#FFAC4B",
             },
           }}
         />

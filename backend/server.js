@@ -52,6 +52,21 @@ app.post("/createOrUpdateUser", async (req, res) => {
   }
 });
 
+// Endpoint to fetch users with names and profile photos
+app.get("/getUsers", async (req, res) => {
+  try {
+    const usersSnapshot = await db.collection("Users").get();
+    const users = usersSnapshot.docs.map((doc) => {
+      const user = doc.data();
+      return { name: user.displayName, photoURL: user.photoURL };
+    });
+    res.status(200).json(users);
+  } catch (error) {
+    console.error("Error fetching users:", error);
+    res.status(500).send(error);
+  }
+});
+
 // Start the server
 const port = process.env.PORT || 3001;
 app.listen(port, () => {
