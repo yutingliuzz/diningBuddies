@@ -6,9 +6,8 @@ import Chats from "./Chats.js";
 const Friends = () => {
   return (
     <div className="Friends">
-      <h1>Hi</h1>
+      <h1>My Friends</h1>
       <Search/>
-      <Chats/>
     </div>
   );
 };

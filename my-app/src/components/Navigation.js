@@ -17,7 +17,7 @@ export default function Navigation() {
         navigate("/home");
         break;
       case 1:
-        navigate("/friends");
+        navigate("/friends/search");
         break;
       case 2:
         navigate("/profile");
