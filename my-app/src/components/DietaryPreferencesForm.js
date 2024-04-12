@@ -1,13 +1,18 @@
 // DietaryPreferencesForm.js
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useContext } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import "./DietaryPreferencesForm.css";
+import { db } from "../firebaseConfig.js";
+import { AuthContext } from "../context/AuthContext";
+import { doc, setDoc } from "firebase/firestore";
 
-const DietaryPreferencesForm = ({ onSave }) => {
+const DietaryPreferencesForm = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [allergy, setAllergy] = useState("");
   const [cuisine, setCuisine] = useState("");
+  const { currentUser} =
+  useContext(AuthContext);
 
   useEffect(() => {
     // If the component receives dietary preferences as state, prefill the form
@@ -19,9 +24,15 @@ const DietaryPreferencesForm = ({ onSave }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await onSave({ allergy, cuisine });
-    if (window.alert("Your preferences are saved!")) {
+    try {
+      const data = {allergy, cuisine}
+      const userRef = doc(db, "Users", currentUser.uid);
+      await setDoc(userRef, { dietaryRestrictions: data }, { merge: true });
+      alert("Preferences saved successfully!");
       navigate("/profile");
+    } catch (error) {
+      console.error("Error saving preferences: ", error);
+      alert("Failed to save preferences.");
     }
   };
 

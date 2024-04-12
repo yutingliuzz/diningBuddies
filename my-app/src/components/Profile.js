@@ -12,37 +12,11 @@ const Profile = () => {
   const [currentView, setCurrentView] = useState("profile");
   const navigate = useNavigate();
   const [dietaryPreferences, setDietaryPreferences] = useState(null);
-  const editDietaryPreferences = () => {
-    navigate("/dietary-preferences", { state: { dietaryPreferences } });
-  };
   const navigateToDietaryPreferences = () => {
     navigate("/dietary-preferences", { state: { dietaryPreferences } });
   };
-  const handleSavePreferences = async (preferences) => {
-    if (!currentUser) {
-      console.error("No user signed in!");
-      return;
-    }
 
-    try {
-      const userRef = doc(db, "Users", currentUser.uid);
-      await setDoc(
-        userRef,
-        { dietaryRestrictions: preferences },
-        { merge: true }
-      );
-      console.log("Dietary preferences saved successfully!");
-      console.log(dietaryPreferences.allergy, dietaryPreferences.cuisine);
 
-      // Re-fetch dietary preferences to update local state
-      const docSnap = await getDoc(userRef);
-      if (docSnap.exists()) {
-        setDietaryPreferences(docSnap.data().dietaryRestrictions);
-      }
-    } catch (error) {
-      console.error("Error saving dietary preferences:", error);
-    }
-  };
   useEffect(() => {
     console.log(dietaryPreferences);
     const fetchDietaryPreferences = async () => {
