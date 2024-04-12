@@ -8,20 +8,23 @@ import Profile from "./components/Profile";
 import { AuthContextProvider } from "./context/AuthContext";
 import DiningHallDetail from "./components/DiningHallDetail";
 import Chat from "./components/Chat";
+import { DiningHallProvider } from "./context/DiningContext";
 
 function App() {
   return (
     <BrowserRouter>
       <AuthContextProvider>
         <Navigation />
-        <Routes>
-          <Route path="/" element={<Navigate replace to="/public" />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="/friends" element={<Friends />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/dining-halls/:name" element={<DiningHallDetail />} />
-          <Route path="/chat" element={<Chat />} />
-        </Routes>
+        <DiningHallProvider>
+          <Routes>
+            <Route path="/" element={<Navigate replace to="/home" />} />
+            <Route path="/home" element={<Home />} />
+            <Route path="/dining-halls/:name" element={<DiningHallDetail />} />
+            <Route path="/friends" element={<Friends />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/chat" element={<Chat />} />
+          </Routes>
+        </DiningHallProvider>
       </AuthContextProvider>
     </BrowserRouter>
   );

@@ -3,16 +3,19 @@
 .detail-container {
   padding: 20px;
   background-color: #fff; /* Assuming a white background */
-  height: 100vh; /* Full height of the viewport */
   display: flex;
-  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative; /* Needed for absolute positioning of children */
+  height: 90vh; /* Viewport Height: Makes the container as tall as the viewport */
+  overflow: hidden; /* Prevents content from causing scroll */
+  flex-direction: column; /* Stacks children vertically */
 }
 
 .detail-title {
-  margin: 0;
+  margin: 10px;
   padding: 20px;
-  background-color: #000; /* Assuming a black background for the title bar */
-  color: #fff; /* White text */
+  color: black; /* White text */
   text-align: center;
 }
 
@@ -37,6 +40,7 @@
 
 .detail-container {
   text-align: center; /* This centers the text inside the container */
+  background-color: antiquewhite;
 }
 
 .button-stack {
@@ -44,4 +48,13 @@
   justify-content: center; /* This centers the flex items (buttons) horizontally */
   gap: 20px; /* This adds space between your buttons */
   padding-top: 20px; /* Space above the button group */
+}
+
+.dining-hall-image {
+  display: flex;
+  place-items: center;
+  padding-top: 10px;
+  width: 75px;
+  height: 75px;
+  object-fit: cover;
 }
