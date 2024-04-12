@@ -11,11 +11,14 @@ import IconButton from "@mui/material/IconButton";
 import SearchIcon from "@mui/icons-material/Search";
 import InputAdornment from "@mui/material/InputAdornment";
 import "./Friends.css";
+import AddIcon from "@mui/icons-material/Add";
+import { Menu, MenuItem } from "@mui/material";
 
 const Friends = () => {
   const [users, setUsers] = useState([]);
   const [searchText, setSearchText] = useState("");
-  const navigate = useNavigate(); // Hook to navigate to different routes
+  const navigate = useNavigate();
+  const [anchorEl, setAnchorEl] = useState(null);
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -40,17 +43,39 @@ const Friends = () => {
     // Navigate to chat with the selected user
     navigate(`/chat`);
   };
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   return (
     <div className="friends-container">
       <header className="chat-list-header">
         <h1>Chats</h1>
+        <IconButton
+          style={{ position: "absolute", right: 20, top: 40, color: "#FFAC4B" }}
+          aria-label="add friend"
+          onClick={handleClick}
+        >
+          <AddIcon />
+        </IconButton>
+        <Menu
+          id="simple-menu"
+          anchorEl={anchorEl}
+          keepMounted
+          open={Boolean(anchorEl)}
+          onClose={handleClose}
+        >
+          <MenuItem onClick={handleClose}>Add friend</MenuItem>
+        </Menu>
       </header>
       <Box
         component="form"
         sx={{
           "& > :not(style)": {
-            m: 1,
+            m: 0,
             width: "90%",
             paddingLeft: "10px",
             borderRadius: "5px",
