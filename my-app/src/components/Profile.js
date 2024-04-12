@@ -1,52 +1,55 @@
 import React, { useState, useEffect, useContext } from "react";
 import "./Profile.css";
 import { AuthContext } from "../context/AuthContext";
-import DietaryPreferencesForm from './DietaryPreferencesForm';
-import { db } from '../firebaseConfig.js';
-import { collection, doc, setDoc, getDoc } from 'firebase/firestore';
-import { useNavigate } from 'react-router-dom';
-
+import DietaryPreferencesForm from "./DietaryPreferencesForm";
+import { db } from "../firebaseConfig.js";
+import { collection, doc, setDoc, getDoc } from "firebase/firestore";
+import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
   const { currentUser, signInWithGoogle, handleSignOut } =
     useContext(AuthContext);
-  const [currentView, setCurrentView] = useState('profile'); 
+  const [currentView, setCurrentView] = useState("profile");
   const navigate = useNavigate();
   const [dietaryPreferences, setDietaryPreferences] = useState(null);
   const editDietaryPreferences = () => {
-    navigate('/dietary-preferences', { state: { dietaryPreferences } });
+    navigate("/dietary-preferences", { state: { dietaryPreferences } });
   };
   const handleSavePreferences = async (preferences) => {
     if (!currentUser) {
-      console.error('No user signed in!');
+      console.error("No user signed in!");
       return;
     }
-  
+
     try {
-      const userRef = doc(db, 'Users', currentUser.uid);
-      await setDoc(userRef, { dietaryRestrictions: preferences }, { merge: true });
-      console.log('Dietary preferences saved successfully!');
-  
+      const userRef = doc(db, "Users", currentUser.uid);
+      await setDoc(
+        userRef,
+        { dietaryRestrictions: preferences },
+        { merge: true }
+      );
+      console.log("Dietary preferences saved successfully!");
+
       // Re-fetch dietary preferences to update local state
       const docSnap = await getDoc(userRef);
       if (docSnap.exists()) {
         setDietaryPreferences(docSnap.data().dietaryRestrictions);
       }
     } catch (error) {
-      console.error('Error saving dietary preferences:', error);
+      console.error("Error saving dietary preferences:", error);
     }
   };
   useEffect(() => {
     const fetchDietaryPreferences = async () => {
       if (currentUser) {
-        const userRef = doc(db, 'Users', currentUser.uid);
+        const userRef = doc(db, "Users", currentUser.uid);
         const docSnap = await getDoc(userRef);
 
         if (docSnap.exists()) {
           setDietaryPreferences(docSnap.data().dietaryRestrictions);
         } else {
           // doc.data() will be undefined in this case
-          console.log('No dietary preferences found!');
+          console.log("No dietary preferences found!");
         }
       }
     };
@@ -73,25 +76,37 @@ const Profile = () => {
               </div>
             </div>
             {dietaryPreferences && (
-            <div className="dietary-info">
-              <p><strong>Allergies:</strong> {dietaryPreferences.allergy}</p>
-              <p><strong>Preferred Cuisine:</strong> {dietaryPreferences.cuisine}</p>
-            </div> )}
+              <div className="dietary-info">
+                <p>
+                  <strong>Allergies:</strong> {dietaryPreferences.allergy}
+                </p>
+                <p>
+                  <strong>Preferred Cuisine:</strong>{" "}
+                  {dietaryPreferences.cuisine}
+                </p>
+              </div>
+            )}
             <div className="menu">
               <button className="menu-item">My Account</button>
               <button className="menu-item" onClick={editDietaryPreferences}>
-              Dietary Preferences
+                Dietary Preferences
               </button>
               <button className="menu-item">Privacy</button>
               <button onClick={handleSignOut} className="sign-out">
                 Sign Out
               </button>
             </div>
-            {currentView === 'foodPreferences' && ( <DietaryPreferencesForm onSave={handleSavePreferences} /> )}
+            <DietaryPreferencesForm onSave={handleSavePreferences} />
             {currentUser.dietaryRestrictions && (
               <div className="dietary-restrictions-display">
-              <p><strong>Allergies:</strong> {currentUser.dietaryRestrictions.allergy}</p>
-              <p><strong>Preferred Cuisine:</strong> {currentUser.dietaryRestrictions.cuisine}</p>
+                <p>
+                  <strong>Allergies:</strong>{" "}
+                  {currentUser.dietaryRestrictions.allergy}
+                </p>
+                <p>
+                  <strong>Preferred Cuisine:</strong>{" "}
+                  {currentUser.dietaryRestrictions.cuisine}
+                </p>
               </div>
             )}
           </>
@@ -108,4 +123,3 @@ const Profile = () => {
 };
 
 export default Profile;
-

@@ -1,31 +1,29 @@
 // DietaryPreferencesForm.js
-
-import React, { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
-import './DietaryPreferencesForm.css';
-
+import React, { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import "./DietaryPreferencesForm.css";
 
 const DietaryPreferencesForm = ({ onSave }) => {
-    const navigate = useNavigate();
-    const location = useLocation();
-    const [allergy, setAllergy] = useState('');
-    const [cuisine, setCuisine] = useState('');
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [allergy, setAllergy] = useState("");
+  const [cuisine, setCuisine] = useState("");
 
-    useEffect(() => {
-        // If the component receives dietary preferences as state, prefill the form
-        if (location.state?.dietaryPreferences) {
-          setAllergy(location.state.dietaryPreferences.allergy || '');
-          setCuisine(location.state.dietaryPreferences.cuisine || '');
-        }
-      }, [location.state]);
-    
-      const handleSubmit = async (e) => {
-        e.preventDefault();
-        await onSave({ allergy, cuisine });
-        if (window.alert('Your preferences are saved!')) {
-          navigate('/profile');
-        }
-      };
+  useEffect(() => {
+    // If the component receives dietary preferences as state, prefill the form
+    if (location.state?.dietaryPreferences) {
+      setAllergy(location.state.dietaryPreferences.allergy || "");
+      setCuisine(location.state.dietaryPreferences.cuisine || "");
+    }
+  }, [location.state]);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    await onSave({ allergy, cuisine });
+    if (window.alert("Your preferences are saved!")) {
+      navigate("/profile");
+    }
+  };
 
   return (
     <form onSubmit={handleSubmit}>

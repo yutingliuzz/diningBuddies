@@ -38,7 +38,7 @@ const Friends = () => {
   const handleUserClick = (userId) => {
     console.log(userId);
     // Navigate to chat with the selected user
-    navigate(`/chats`);
+    navigate(`/chat`);
   };
 
   return (
