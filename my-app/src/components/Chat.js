@@ -1,6 +1,6 @@
 import React from "react";
 import "./Chat.css";
-import { useRef, useState } from "react";
+import { useRef, useState, useContext } from "react";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import {
   collection,
@@ -11,6 +11,10 @@ import {
   addDoc,
   serverTimestamp,
 } from "firebase/firestore";
+import { db } from "../firebaseConfig";
+import { AuthContext } from "../context/AuthContext";
+import { TextField, Button, IconButton } from "@mui/material";
+import SendIcon from "@mui/icons-material/Send";
 
 const ChatMessage = ({ message, user }) => {
   const { text, uid, photoURL } = message;
@@ -31,10 +35,11 @@ const ChatMessage = ({ message, user }) => {
   );
 };
 
-const Chat = ({ user, firestore }) => {
+const Chat = () => {
   const dummy = useRef();
-  const messagesRef = collection(firestore, "messages");
+  const messagesRef = collection(db, "messages");
   const messagesQuery = query(messagesRef, orderBy("createdAt"), limit(25));
+  const { currentUser } = useContext(AuthContext);
 
   const [messages] = useCollectionData(messagesQuery, { idField: "id" });
 
@@ -43,7 +48,7 @@ const Chat = ({ user, firestore }) => {
   const sendMessage = async (e) => {
     e.preventDefault();
 
-    const { uid, photoURL } = user;
+    const { uid, photoURL } = currentUser;
 
     try {
       await addDoc(messagesRef, {
@@ -61,7 +66,7 @@ const Chat = ({ user, firestore }) => {
     dummy.current.scrollIntoView({ behavior: "smooth" });
   };
 
-  if (!user) {
+  if (!currentUser) {
     return <div>not signed in </div>;
   }
   return (
@@ -69,25 +74,207 @@ const Chat = ({ user, firestore }) => {
       <main>
         {messages &&
           messages.map((msg) => (
-            <ChatMessage key={msg.id} message={msg} user={user} />
+            <ChatMessage key={msg.id} message={msg} user={currentUser} />
           ))}
 
         <span ref={dummy}></span>
       </main>
 
-      <form onSubmit={sendMessage}>
-        <input
+      <form
+        onSubmit={sendMessage}
+        style={{ width: "90%", paddingLeft: "20px", marginTop: "150%" }}
+        className="chat-form"
+      >
+        <TextField
+          fullWidth
+          variant="outlined"
           value={formValue}
+          style={{ fontFamily: "Montserrat, sans-serif" }}
           onChange={(e) => setFormValue(e.target.value)}
-          placeholder="say something nice"
+          placeholder="Say something nice"
+          InputProps={{
+            endAdornment: (
+              <IconButton color="primary" disabled={!formValue} type="submit">
+                <SendIcon />
+              </IconButton>
+            ),
+          }}
         />
-
-        <button type="submit" disabled={!formValue}>
-          🕊️
-        </button>
       </form>
     </>
   );
 };
 
 export default Chat;
+
+// Chats.js
+// import React, { useState, useEffect } from "react";
+// import { useParams } from "react-router-dom";
+// import {
+//   getFirestore,
+//   collection,
+//   query,
+//   orderBy,
+//   onSnapshot,
+//   addDoc,
+// } from "firebase/firestore";
+
+// const Chat = () => {
+//   const { userId } = useParams(); // userId of the chat partner
+//   const [messages, setMessages] = useState([]);
+//   const [newMessage, setNewMessage] = useState("");
+//   const db = getFirestore();
+
+//   useEffect(() => {
+//     // Define the chat document ID somehow. This is just a placeholder.
+//     // In practice, you would likely retrieve it from the URL or state.
+//     const chatDocId = "CHAT_DOC_ID";
+
+//     const q = query(
+//       collection(db, "Chats", chatDocId, "Messages"),
+//       orderBy("timestamp")
+//     );
+//     const unsubscribe = onSnapshot(q, (querySnapshot) => {
+//       const fetchedMessages = querySnapshot.docs.map((doc) => ({
+//         id: doc.id,
+//         ...doc.data(),
+//       }));
+//       setMessages(fetchedMessages);
+//     });
+
+//     return unsubscribe;
+//   }, [db, userId]);
+
+//   const sendMessage = async () => {
+//     if (!newMessage.trim()) return;
+
+//     // Again, this is just a placeholder. You would need to define how you get the chatDocId.
+//     const chatDocId = "CHAT_DOC_ID";
+//     await addDoc(collection(db, "Chats", chatDocId, "Messages"), {
+//       text: newMessage,
+//       senderId: "CURRENT_USER_ID", // Replace with the current user's ID
+//       timestamp: new Date(), // Firestore will convert this to a Timestamp
+//     });
+//     setNewMessage("");
+//   };
+
+//   return (
+//     <div className="chat-container">
+//       <div className="messages-container">
+//         {messages.map((message) => (
+//           <p
+//             key={message.id}
+//             className={
+//               message.senderId === "CURRENT_USER_ID" ? "sent" : "received"
+//             }
+//           >
+//             {message.text}
+//           </p>
+//         ))}
+//       </div>
+//       <div className="input-container">
+//         <input
+//           className="message-input"
+//           value={newMessage}
+//           onChange={(e) => setNewMessage(e.target.value)}
+//           placeholder="Type a message..."
+//         />
+//         <button className="send-button" onClick={sendMessage}>
+//           Send
+//         </button>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default Chat;
+
+// Chats.js
+// import React, { useState, useEffect, useContext } from "react";
+// import { useParams } from "react-router-dom";
+// import { AuthContext } from "../context/AuthContext";
+// import "./Chat.css";
+
+// const Chat = () => {
+//   const { userId } = useParams();
+//   const [messages, setMessages] = useState([]);
+//   const [newMessage, setNewMessage] = useState("");
+//   const [chatDocId, setChatDocId] = useState(null);
+//   const { currentUser } = useContext(AuthContext);
+
+//   // Fetch messages for a chat
+//   useEffect(() => {
+//     const fetchMessages = async () => {
+//       if (chatDocId) {
+//         const response = await fetch(
+//           `http://localhost:3001/chats/${chatDocId}/messages`
+//         );
+//         const data = await response.json();
+//         setMessages(data);
+//       }
+//     };
+
+//     fetchMessages();
+//   }, [chatDocId]);
+
+//   // Get or create chat document ID
+//   useEffect(() => {
+//     const getOrCreateChat = async () => {
+//       const response = await fetch(
+//         `http://localhost:3001/getOrCreateChat/${currentUser.uid}/${userId}`
+//       );
+//       const data = await response.json();
+//       setChatDocId(data.chatId);
+//     };
+
+//     getOrCreateChat();
+//   }, [userId]);
+
+//   // Send message to the chat
+//   const sendMessage = async () => {
+//     if (newMessage.trim() && chatDocId) {
+//       await fetch(`http://localhost:3001/chats/${chatDocId}/messages`, {
+//         method: "POST",
+//         headers: {
+//           "Content-Type": "application/json",
+//         },
+//         body: JSON.stringify({
+//           text: newMessage,
+//           senderId: "CURRENT_USER_ID", // Replace with actual sender's ID
+//         }),
+//       });
+//       setNewMessage("");
+//       // Optionally, fetch messages again to update UI
+//     }
+//   };
+
+//   return (
+//     <div className="chat-container">
+//       <div className="messages-container">
+//         {messages.map((message) => (
+//           <p
+//             key={message.id}
+//             className={
+//               message.senderId === "CURRENT_USER_ID" ? "sent" : "received"
+//             }
+//           >
+//             {message.text}
+//           </p>
+//         ))}
+//       </div>
+//       <div className="input-container">
+//         <input
+//           className="message-input"
+//           value={newMessage}
+//           onChange={(e) => setNewMessage(e.target.value)}
+//           placeholder="Type a message..."
+//         />
+//         <button className="send-button" onClick={sendMessage}>
+//           Send
+//         </button>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default Chat;
