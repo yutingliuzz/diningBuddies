@@ -20,7 +20,7 @@ function App() {
           <Route path="/friends" element={<Friends />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/dining-halls/:name" element={<DiningHallDetail />} />
-          <Route path="/chat" element={<Chat />} />
+          <Route path="/chats" element={<Chat />} />
         </Routes>
       </AuthContextProvider>
     </BrowserRouter>
