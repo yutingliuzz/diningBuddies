@@ -1,34 +1,85 @@
-/* FriendList.css */
-.friend-list {
-  background-color: "white";
-  overflow-y: auto;
-  height: 100vh; /* You can adjust the height as needed */
-  padding: 20px;
+.chat-list-container {
+  font-family: "Montserrat", sans-serif;
+  color: #333;
 }
 
-.friend-item {
+.chat-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  padding-bottom: 5px;
+}
+
+.chat-stories {
   display: flex;
   align-items: center;
-  margin-bottom: 20px;
-  padding: 10px;
-  border-radius: 5px;
-  border-bottom: 1px solid black;
+  overflow-x: auto;
+  padding: 20px;
+  gap: 10px;
 }
 
-.friend-avatar {
-  width: 30px; /* Adjust this value to scale the width of the avatar */
-  height: 30px; /* Adjust this value to scale the height of the avatar */
-  border-radius: 50%; /* This will make it a circle shape */
-  margin-right: 15px;
+.story-add-button {
+  /* Add styles for add story button */
+}
+
+.story-avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 30px;
   object-fit: cover;
 }
 
-.friend-info h2 {
-  margin: 0;
-  color: black;
+.story-name {
+  text-align: center;
 }
 
-.friend-info p {
-  margin: 5px 0 0;
-  color: #aaa;
+.chat-list {
+  overflow-y: auto;
+}
+
+.chat-preview {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  border-bottom: 1px solid #ccc;
+}
+
+.chat-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 25px;
+  object-fit: cover;
+  margin-right: 10px;
+}
+
+.chat-info {
+  flex-grow: 1;
+}
+
+.chat-name {
+  font-weight: bold;
+}
+
+.chat-last-message {
+  color: #666;
+  font-size: 0.9em;
+}
+
+.chat-timestamp {
+  color: #666;
+  font-size: 0.8em;
+}
+
+.new-chat-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 10px 20px;
+  font-size: 1em;
+  color: white;
+  background-color: black;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
 }
