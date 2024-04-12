@@ -58,7 +58,7 @@ app.get("/getUsers", async (req, res) => {
     const usersSnapshot = await db.collection("Users").get();
     const users = usersSnapshot.docs.map((doc) => {
       const user = doc.data();
-      return { name: user.displayName, photoURL: user.photoURL };
+      return { name: user.displayName, photoURL: user.photoURL, uid: user.uid };
     });
     res.status(200).json(users);
   } catch (error) {
@@ -149,6 +149,105 @@ app.get("/DiningHallDetail/:name", async (req, res) => {
   } catch (error) {
     console.error("Error getting dining hall details:", error);
     res.status(500).send(error);
+  }
+});
+
+app.get("/chats/:userId", async (req, res) => {
+  const { userId } = req.params;
+  // Logic to retrieve or create a chat for the user
+});
+
+// This function could be used to create a new chat if one doesn't exist between two users
+async function getOrCreateChat(userIds) {
+  // sort userIds to ensure consistent order
+  userIds.sort();
+  const chatsRef = db.collection("chats");
+  const chatQuery = chatsRef.where("userIds", "==", userIds);
+  const chatSnapshot = await chatQuery.get();
+
+  if (chatSnapshot.empty) {
+    const newChatRef = await chatsRef.add({ userIds, messages: [] });
+    return newChatRef.id;
+  } else {
+    return chatSnapshot.docs[0].id;
+  }
+}
+
+// Endpoint to get or create a chat
+app.get("/getOrCreateChat/:user1Id/:user2Id", async (req, res) => {
+  const { user1Id, user2Id } = req.params;
+  try {
+    const chatId = await getOrCreateChat([user1Id, user2Id]);
+    res.json({ chatId });
+  } catch (error) {
+    console.error("Error getting or creating chat:", error);
+    res.status(500).send(error.message);
+  }
+});
+
+// Endpoint to post a new message to a chat
+app.post("/chats/:chatId/messages", async (req, res) => {
+  const { chatId } = req.params;
+  const { text, senderId } = req.body;
+  try {
+    const messagesRef = db
+      .collection("chats")
+      .doc(chatId)
+      .collection("messages");
+    await messagesRef.add({
+      text,
+      senderId,
+      timestamp: admin.firestore.FieldValue.serverTimestamp(),
+    });
+    res.status(200).send("Message sent.");
+  } catch (error) {
+    console.error("Error sending message:", error);
+    res.status(500).send(error.message);
+  }
+});
+
+// Add these endpoints to your server.js file
+
+// Endpoint to add a new message to a specific chat
+app.post("/chats/:chatId/messages", async (req, res) => {
+  const { chatId } = req.params;
+  const { text, senderId } = req.body;
+
+  try {
+    await db.collection("chats").doc(chatId).collection("messages").add({
+      text,
+      senderId,
+      timestamp: admin.firestore.FieldValue.serverTimestamp(),
+    });
+    res.status(201).send("Message added successfully.");
+  } catch (error) {
+    console.error("Error adding message:", error);
+    res.status(500).send(error.message);
+  }
+});
+
+// Endpoint to fetch messages for a specific chat
+app.get("/chats/:chatId/messages", async (req, res) => {
+  const { chatId } = req.params;
+
+  try {
+    const messagesRef = db
+      .collection("chats")
+      .doc(chatId)
+      .collection("messages");
+    const messagesSnapshot = await messagesRef
+      .orderBy("timestamp", "asc")
+      .get();
+
+    const messages = messagesSnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+
+    res.status(200).json(messages);
+  } catch (error) {
+    console.error("Error fetching messages:", error);
+    res.status(500).send(error.message);
   }
 });
 

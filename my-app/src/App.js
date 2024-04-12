@@ -8,20 +8,28 @@ import Profile from "./components/Profile";
 import { AuthContextProvider } from "./context/AuthContext";
 import DiningHallDetail from "./components/DiningHallDetail";
 import Chat from "./components/Chat";
+import DietaryPreferencesForm from "./components/DietaryPreferencesForm";
+import { DiningHallProvider } from "./context/DiningContext";
 
 function App() {
   return (
     <BrowserRouter>
       <AuthContextProvider>
         <Navigation />
-        <Routes>
-          <Route path="/" element={<Navigate replace to="/public" />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="/friends" element={<Friends />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/dining-halls/:name" element={<DiningHallDetail />} />
-          <Route path="/chats" element={<Chat />} />
-        </Routes>
+        <DiningHallProvider>
+          <Routes>
+            <Route path="/" element={<Navigate replace to="/public" />} />
+            <Route path="/home" element={<Home />} />
+            <Route path="/friends" element={<Friends />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/dining-halls/:name" element={<DiningHallDetail />} />
+            <Route
+              path="/dietary-preferences"
+              element={<DietaryPreferencesForm />}
+            />
+            <Route path="/chat" element={<Chat />} />
+          </Routes>
+        </DiningHallProvider>
       </AuthContextProvider>
     </BrowserRouter>
   );
